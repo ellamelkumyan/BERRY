@@ -1,10 +1,4 @@
 (function() {
-    
-    if (!document.querySelector('.hit__wrapper')) {
-        console.log('Слайдер не найден на странице');
-        return;
-    }
-
     // константы
     const dots = document.querySelectorAll('.dot');
     const wrapper = document.querySelector('.hit__wrapper');
@@ -13,10 +7,72 @@
     const nextButton = document.querySelector('.hit__button-next');
     const buttonUp = document.querySelector('.feedback__button-up');
     const header = document.querySelector('.header');
+    const rangeMin = document.querySelector('.range-min');
+    const rangeMax = document.querySelector('.range-max');
+    const inputMin = document.querySelector('.catalogue__input-min');
+    const inputMax = document.querySelector('.catalogue__input-max');
+    const progress = document.querySelector('.progress');
 
     // таймеры
     let isScrolling;
     let resizeTimer;
+
+    // функции для ценового фильтра
+    function initPriceFilter() {
+    if (!rangeMin || !rangeMax || !inputMin || !inputMax || !progress) return;
+
+    const minVal = parseInt(rangeMin.min, 10);
+    const maxVal = parseInt(rangeMax.max, 10);
+    
+    function updateMinInput() {
+        let minValue = parseInt(rangeMin.value, 10);
+        let maxValue = parseInt(rangeMax.value, 10);
+        
+        if (minValue > maxValue) {
+            minValue = maxValue;
+            rangeMin.value = minValue;
+        }
+        
+        inputMin.value = minValue;
+        const percent = ((minValue - minVal) / (maxVal - minVal)) * 100;
+        progress.style.left = percent + "%";
+    }
+    
+    function updateMaxInput() {
+        let minValue = parseInt(rangeMin.value, 10);
+        let maxValue = parseInt(rangeMax.value, 10);
+        
+        if (maxValue < minValue) {
+            maxValue = minValue;
+            rangeMax.value = maxValue;
+        }
+        
+        inputMax.value = maxValue;
+        const percent = 100 - ((maxValue - minVal) / (maxVal - minVal)) * 100;
+        progress.style.right = percent + "%";
+    }
+    
+    // обработчики для ползунков
+    rangeMin.addEventListener('input', updateMinInput);
+    rangeMax.addEventListener('input', updateMaxInput);
+    
+    // обработчики для текстовых полей
+    inputMin.addEventListener('change', function() {
+        rangeMin.value = this.value;
+        updateMinInput();
+        updateMaxInput(); // обновляем max на случай если min стал больше
+    });
+    
+    inputMax.addEventListener('change', function() {
+        rangeMax.value = this.value;
+        updateMaxInput();
+        updateMinInput(); // обновляем min на случай если max стал меньше
+    });
+    
+    // инициализация
+    updateMinInput();
+    updateMaxInput();
+}
 
     // проверка инпута с именем
     function initNameValidation() {
@@ -25,22 +81,19 @@
 
         function validateName() {
             const hasNumbers = /[0-9]/.test(nameInput.value);
-            nameInput.classList.toggle('error', hasNumbers); // добавляем/удаляем класс error
+            nameInput.classList.toggle('error', hasNumbers);
         }
 
         nameInput.addEventListener('input', validateName);
         validateName(); 
     }
 
-    // Запуск при загрузке страницы
-    document.addEventListener('DOMContentLoaded', initNameValidation);
-
-
+    // функции для слайдера
     function getVisibleItemsCount() {
         if (!items.length) return 0;
         return Math.floor(wrapper.offsetWidth / items[0].offsetWidth) || 1;
     }
-    // измненение состояния точен
+
     function updateActiveDot() {
         if (!wrapper || !items.length || !dots.length) return;
         
@@ -86,7 +139,9 @@
 
     function handleResize() {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(updateActiveDot, 200);
+        resizeTimer = setTimeout(() => {
+            updateActiveDot();
+        }, 200);
     }
 
     function handleButtonUpClick() {
@@ -122,6 +177,10 @@
         });
         
         if (buttonUp) buttonUp.removeEventListener('click', handleButtonUpClick);
+        
+        // очистка ценового фильтра
+        if (rangeMin) rangeMin.removeEventListener('input', updateMinInput);
+        if (rangeMax) rangeMax.removeEventListener('input', updateMaxInput);
     }
 
     function init() {
@@ -131,9 +190,10 @@
         }
         
         initNameValidation();
-        
+        initPriceFilter();
     }
 
+    // запуск инициализации
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
         setTimeout(init, 0);
     } else {

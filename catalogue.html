@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/modern-normalize@v1.1.0/modern-normalize.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sanitize.css/2.0.0/sanitize.min.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header__container">
+    <nav class="header__items">
+        <div class="header__logo-wrapper">
+            <img class="header__logo" src="assets/header-logo.svg" alt="">
+        </div>
+        <div class="header__links">
+            <a class="header__link link header-and-footer-item" href="index.html">О нас</a>
+            <a class="header__link link header-and-footer-item" href="catalogue.html">Каталог</a>
+            <a class="header__link link header-and-footer-item" href="">Акции</a>
+            <a class="header__link link header-and-footer-item" href="">Доставка</a>
+            <a class="header__link link header-and-footer-item" href="">Контакты</a>
+        </div>
+        <div class="header__icons">
+            <div class="header__icon-wrapper cart-icon-wrapper">
+                <img class="header__icon cart-icon" src="assets/header-icon-cart.svg" alt="">
+            </div>
+            <div class="header__icon-wrapper glass-icon-wrapper">
+                <img class="header__icon glass-icon" src="assets/header-icon-glass.svg" alt="">
+            </div>
+        </div>
+        <div class="header__number-wrapper">
+            <div class="header__number header-and-footer-item">+ 7 (999) 123-45-67</div>
+            <div class="header__call header-and-footer-item">заказать обратный звонок</div>
+        </div>
+    </nav>
+    </div>
+</header>
+
+
+<!-- CATALOGUE -->
+<div class="catalogue">
+	<div class="catalogue__container">
+
+
+		<div class="catalogue__top">Главная 
+			<img src="assets/arrow-black.svg" alt="">
+			<div class="catalogue__red-text">Свежие ягоды в простой коробке</div>
+		</div>
+
+
+		<div class="catalogue__title title">Каталог</div>
+
+
+		<div class="catalogue__kinds-wrapper">
+
+
+			<div class="catalogue__kinds-item">
+				<div class="catalogue__empty-box-wrapper">
+					<img class="catalogue__empty-box-img" src="assets/empty-box.svg" alt="">
+				</div>
+				<div class="catalogue__kinds-item-text">Простая коробка</div>
+			</div>
+
+
+			<div class="catalogue__kinds-item">
+				<div class="catalogue__kinds-item-wrapper">
+					<img class="catalogue__kinds-item-img" src="assets/box-heart.svg" alt="">
+				</div>
+				<div class="catalogue__kinds-item-text">Коробка-сердце</div>
+			</div>
+
+			
+			<div class="catalogue__kinds-item">
+				<div class="catalogue__kinds-item-wrapper">
+					<img class="catalogue__kinds-item-img" src="assets/plastic-box.svg" alt="">
+				</div>
+				<div class="catalogue__kinds-item-text">Пластиковая тара</div>
+			</div>
+
+
+			<div class="catalogue__kinds-item">
+				<div class="catalogue__kinds-item-wrapper">
+					<img class="catalogue__kinds-item-img" src="assets/basket.svg" alt="">
+				</div>
+				<div class="catalogue__kinds-item-text">Корзинка</div>
+			</div>
+
+
+			<div class="catalogue__kinds-item">
+				<div class="catalogue__kinds-item-wrapper">
+					<img class="catalogue__kinds-item-img" src="./assets/bouquet.svg" alt="">
+				</div>
+				<div class="catalogue__kinds-item-text">Букет</div>
+			</div>
+
+
+		</div>
+		<div class="catalogue__filter-and-result">
+
+
+			<div class="catalogue__filter">
+				<div class="catalogue__filter-container">
+
+
+					<div class="catalogue__filter-sort">
+						<div class="catalogue__filter-sort-wrapper">
+							<div class="catalogue__filter-sort-title filter-title">Сортировать:</div>
+							<div class="catalogue__filter-sort-item">
+								<input type="radio" class="catalogue__radio" id="by-default" name="sorting" value="by-default" checked>
+								<label for="by-default">по умолчанию</label>
+							</div>
+							<div class="catalogue__filter-sort-item">
+								<input type="radio" class="catalogue__radio" id="ascending" name="sorting" value="ascending">
+								<label for="ascending">по возрастанию цены</label>
+							</div>
+							<div class="catalogue__filter-sort-item">
+								<input type="radio" class="catalogue__radio" id="descending" name="sorting" value="descending">
+								<label for="descending">по убыванию цены</label>
+							</div>
+							<div class="catalogue__filter-sort-item">
+								<input type="radio" class="catalogue__radio" id="new" name="sorting" value="new">
+								<label for="new">по новинкам</label>
+							</div>
+							<div class="catalogue__filter-sort-item">
+								<input type="radio" class="catalogue__radio" id="popular" name="sorting" value="popular" disabled>
+								<label for="popular">по популярности</label>
+							</div>
+							<!-- <div class="catalogue__filter-horizontal-line"></div> -->
+						</div>
+						<div class="catalogue__filter-horizontal-line"></div>
+					</div>
+
+
+					<div class="catalogue__filter-price">
+						<div class="catalogue__filter-title filter-title">Цена:</div>
+						<div class="catalogue__price-filter-wrapper">
+							<div class="catalogue__price-input">
+								<input type="number" class="catalogue__input-min" value="1500" min="0" max="5000" readonly>
+								<input type="number" class="catalogue__input-max" value="3500" min="0" max="5000" readonly>
+							</div>
+							<div class="catalogue__slider-container">
+								<div class="catalogue__slider">
+									<div class="progress"></div>
+								</div>
+								<div class="range-input">
+									<input type="range" class="range-min" min="0" max="5000" value="1500" step="100">
+									<input type="range" class="range-max" min="0" max="5000" value="3500" step="100">
+								</div>
+							</div>
+						</div>
+						<div class="catalogue__filter-horizontal-line"></div>
+					</div>
+
+
+					<div class="catalogue__filter-berries">
+						<div class="catalogue__filter-berries-wrapper">
+							<div class="catalogue__filter-title filter-title">Ягоды:</div>
+							<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="cherry" name="berries" value="cherry">
+								<label for="cherry">вишня</label><br>
+							</div>
+							<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="blackberry" name="berries" value="blackberry">
+								<label for="blackberry">черника</label><br>
+							</div>
+							<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="victoria" name="berries" value="victoria">
+								<label for="victoria">виктория</label><br>
+							</div>
+							<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="blueberry" name="berries" value="blueberry">
+								<label for="blueberry">голубика</label><br>
+							</div>
+							<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="raspberry" name="sorting" value="raspberry">
+								<label for="raspberry">малина</label><br>
+							</div>
+							<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="currant" name="berries" value="currant">
+								<label for="currant">смородина</label><br>
+							</div>
+							<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="dewberry" name="berries" value="dewberry">
+								<label for="dewberry">ежевика</label><br>
+							</div>
+							<div class="catalogue__look-more">Посмотреть все</div>
+							<div class="catalogue__filter-horizontal-line"></div>
+						</div>
+						<!-- <div class="catalogue__filter-horizontal-line"></div> -->
+					</div>
+
+
+					<div class="catalogue__filter-sweets">
+						<div class="catalogue__filter-title filter-title">Наличие сладостей: </div>
+						<label class="toggle-switch">
+							<input type="checkbox" class="toggle-input">
+							<span class="toggle-slider"></span>
+						</label>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="catalogue__result">
+				<div class="catalogue__result-wrapper">
+
+
+					<div class="catalogue__result-item">
+						<img class="catalogue__result-img" src="./assets/sunrise.png" alt="">
+						<div class="catalogue__result-title-and-price">
+							<div class="catalogue__result-title">Микс “Sunrise”</div>
+							 <div class="price-wrapper">
+            <span class="new-price">1 600 ₽</span>
+			<span class="old-price"></span>
+        </div>
+						</div>
+						<div class="catalogue__result-button-wrapper">
+							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
+						</div>
+						<div class="catalogue__result-more">Подробнее</div>
+					</div>
+
+
+                    <div class="catalogue__result-item">
+						<img class="catalogue__result-img" src="./assets/tofi.png" alt="">
+						<div class="catalogue__result-title-and-price">
+                          <div class="catalogue__result-title">Микс “Tofi”</div>
+						  <div class="price-wrapper">
+            <span class="new-price">2 600 ₽</span>
+			<span class="old-price">2 900 ₽</span>
+        </div>
+					    </div>
+                        <div class="catalogue__result-button-wrapper">
+							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
+						</div>
+						<div class="catalogue__result-more">Подробнее</div>
+					</div>
+
+
+                    <div class="catalogue__result-item">
+						<img class="catalogue__result-img" src="./assets/lovely.png" alt="">
+						<div class="catalogue__result-title-and-price">
+                          <div class="catalogue__result-title">Микс “Lovely...”</div>
+						   <div class="price-wrapper">
+            <span class="new-price">1 800 ₽</span>
+			<span class="old-price"></span>
+        </div>
+					    </div>
+                        <div class="catalogue__result-button-wrapper">
+							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
+						</div>
+						<div class="catalogue__result-more">Подробнее</div>
+					</div>
+
+
+                    <div class="catalogue__result-item">
+						<img class="catalogue__result-img" src="./assets/honey.png" alt="">
+						<div class="catalogue__result-title-and-price">
+                          <div class="catalogue__result-title">Микс “Honey”</div>
+						   <div class="price-wrapper">
+            <span class="new-price">1 500 ₽</span>
+			<span class="old-price"></span>
+        </div>
+					    </div>
+                        <div class="catalogue__result-button-wrapper">
+							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
+						</div>
+						<div class="catalogue__result-more">Подробнее</div>
+					</div>
+
+
+                    <div class="catalogue__result-item">
+						<img class="catalogue__result-img" src="./assets/moonlight.png" alt="">
+						<div class="catalogue__result-title-and-price">
+                          <div class="catalogue__result-title">Микс “Moonlight”</div>
+						   <div class="price-wrapper">
+            <span class="new-price">2 100 ₽</span>
+			<span class="old-price"></span>
+        </div>
+					    </div>
+                        <div class="catalogue__result-button-wrapper">
+							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
+						</div>
+						<div class="catalogue__result-more">Подробнее</div>
+					</div>
+
+
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<!-- ACTION -->
+<div class="action">
+    <div class="action__container">
+        <div class="action__wrapper">
+            <div class="action__title title">Акция</div>
+            <div class="action__description">При первом заказе дарим скидку 30% по промокоду berries!</div>
+            <div class="action__button-wrapper">
+                <a class="action__link link transparent-button" role="button" href="">Подробнее</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer__title title">Наши контакты</div>
+    <div class="footer__container">
+    <div class="footer__wrapper">
+        <div class="footer__item">
+            <div class="footer__item-title title">Телефон:</div>
+            <div class="footer__item-content">+7 (999) 123-45-67</div>
+        </div>
+        <div class="footer__item">
+            <div class="footer__item-title title">Время работы:</div>
+            <div class="footer__item-content">Ежедневно с 9.00 до 21.00</div>
+        </div>
+        <div class="footer__item">
+            <div class="footer__item-title title">E-mail:</div>
+            <div class="footer__item-content">berries@yandex.ru</div>
+        </div>
+        <div class="footer__item">
+            <div class="footer__item-title title">Адрес:</div>
+            <div class="footer__item-content">Санкт-Петербург,<br>Невский пр. 10/2А</div>
+        </div>
+        <div class="footer__item">
+            <div class="footer__item-title title">Социальные сети:</div>
+            <div class="footer__item-content-logo">
+                <img class="footer__logo" src="assets/inst.svg">
+                <img class="footer__logo" src="assets/vk.svg">
+                <img class="footer__logo" src="assets/whats.svg">
+            </div>
+        </div>
+
+    </div>
+</div>
+</footer>
+
+
+<!-- FOOTER-BOTTOM -->
+<footer class="footer-bottom">
+    <div class="horizontal-line"></div>
+    <div class="footer-bottom__container">
+        <div class="footer-bottom__items">
+            <div class="footer-bottom__logo-wrapper">
+                <img class="footer-bottom__logo" src="assets/header-logo.svg" alt="">
+            </div>
+            <div class="footer-bottom__links">
+                <a class="footer-bottom__link link header-and-footer-item" href="">О нас</a>
+                <a class="footer-bottom__link link header-and-footer-item" href="">Каталог</a>
+                <a class="footer-bottom__link link header-and-footer-item" href="">Акции</a>
+                <a class="footer-bottom__link link header-and-footer-item" href="">Доставка</a>
+                <a class="footer-bottom__link link header-and-footer-item" href="">Контакты</a>
+            </div>
+            <div class="footer-bottom__icons link header-and-footer-item">Политика конфиденциальности</div>
+            <div class="footer-bottom__number-wrapper link header-and-footer-item">© 2019 - 2021 Все права защищены</div>
+        </div>
+</div>
+</footer>
+
+
+<script src="script.js"></script>
+</body>
+</html>
+</body>
+</html>
