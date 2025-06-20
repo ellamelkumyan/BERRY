@@ -525,6 +525,7 @@ html {
     -ms-overflow-style: none; 
     scrollbar-width: none; 
     padding-bottom: 35px;
+		transition: transform 0.5s ease;
 }
 
 .hit__wrapper::-webkit-scrollbar {
