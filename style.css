@@ -37,6 +37,7 @@ html {
 .red-button:disabled {
     background: linear-gradient(92.45deg, rgba(98, 3, 0, 0.5) -10.06%, rgba(225, 85, 93, 0.5) 116.87%);
     border: none;
+    pointer-events: none;
 }
 
 .header-and-footer-item:hover {
@@ -72,6 +73,8 @@ html {
 }
 
 .header__container {
+    display: flex;
+    flex-direction: column;
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 20px;
@@ -121,6 +124,7 @@ html {
     font-family: "Old Standard TT", serif;
     text-transform: uppercase;
     max-width: 834px;
+    line-height: 72px;
 }
 
 .header__description {
@@ -128,11 +132,13 @@ html {
     font-size: 22px;
     max-width: 568px;
     padding-top: 15px;
+    line-height: 33px;
+    font-weight: 400;
 }
 
 .header__button-wrapper {
-    padding-top: 30px;
-    padding-bottom: 150px;
+    margin-top: 30px;
+    margin-bottom: 150px;
 }
 
 .header__red-link {
@@ -236,13 +242,17 @@ html {
 .intro__text-up {
     padding-top: 20px;
     font-family: "Noto Sans", sans-serif;
-    max-width: 530px;
+    max-width: 470px;
+    color: #333333;
+    line-height: 24px;
 }
 
 .intro__text-down {
     padding-top: 20px;
     font-family: "Noto Sans", sans-serif;
-    max-width: 530px;
+    max-width: 500px;	
+    color: #333333;
+    line-height: 24px;
 }
 
 
@@ -433,6 +443,8 @@ html {
     font-size: 22px;
     color: #FFFFFF;
     text-align: center;
+    height: 66px; /*чтобы верстка не поехала */
+    line-height: 33px;
 }
 
 .catalogue__item-button {
@@ -458,10 +470,11 @@ html {
     color: #FFFFFF;
 }
 
-.white-button.disabled {
+.white-button:disabled {
     background-color: #FFFFFF;
     color: #C4C4C4;
     border: solid 1px #C4C4C4;
+    pointer-events: none;
 }
 
 .catalogue__item_final {
@@ -525,7 +538,7 @@ html {
     -ms-overflow-style: none; 
     scrollbar-width: none; 
     padding-bottom: 35px;
-		transition: transform 0.5s ease;
+    transition: transform 0.5s ease;
 }
 
 .hit__wrapper::-webkit-scrollbar {
@@ -662,10 +675,11 @@ html {
 }
 
 .delivery__list-item {
+    display: flex;
+    gap: 12px;
     font-family: "Noto Sans", sans-serif;
     color: #333333;
     margin-bottom: 25px;
-
 }
 
 .delivery__right {
@@ -678,9 +692,9 @@ html {
     padding-bottom: 20px;
 }
 
-.delivery__circle {
+/* .delivery__circle {
     padding-right: 8px;
-}
+} */
 
 
 /* FEEDBACK */
@@ -713,6 +727,7 @@ html {
     max-width: 654px;
     text-align: center;
     color: #333333;
+    line-height: 24px;
 }
 
 .feedback__input {
@@ -722,10 +737,11 @@ html {
     border: 1px solid #26254C80;
     border-radius: 5px;
     transition: border-color 0.3s ease;
+    font-family: "Noto Sans", sans-serif;
 }
 
-.input-name.error {
-    border-color: #ff4444 !important; /* Приоритет над всеми состояниями */
+.input-name:invalid {
+    border-color: #ff4444 !important;
     background-image: url(./assets/input-error.svg);
     background-repeat: no-repeat;
     background-position: right 20px center;
@@ -761,9 +777,12 @@ html {
     pointer-events: none;
 }
 
-.feedback-input::placeholder {
+.feedback__input::placeholder {
     color: #C4C4C4;
     font-family: "Noto Sans", sans-serif;
+    line-height: 24px;
+    font-weight: 400px;
+    font-style: normal;
 }
 
 .feedback__img {
@@ -828,6 +847,7 @@ html {
 .footer__item-content {
     font-family: "Noto Sans", sans-serif;
     font-size: 18px;
+    line-height: 27px;
 }
 
 .footer__item-content-logo {
@@ -958,8 +978,8 @@ html {
 
 .catalogue__price-filter-wrapper {
     width: 163px;
-    padding-top: 13px;
-    padding-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 30px;
     justify-self: center;
 }
 
@@ -986,6 +1006,14 @@ html {
 .catalogue__price-input input::-webkit-inner-spin-button {
     -webkit-appearance: none;
      margin: 0;
+}
+
+.range-min::-webkit-slider-thumb {
+    transform: translateX(-5px);
+}
+
+.range-max::-webkit-slider-thumb {
+    transform: translateX(5px);
 }
     
 .catalogue__slider-container {
@@ -1113,7 +1141,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .catalogue__filter-container {
-    padding: 20px 24px 42px 20px;
+    padding: 20px 24px 30px 20px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -1122,7 +1150,6 @@ input[type="range"]::-moz-range-thumb {
 
 .filter-title {
     font-weight: 600;
-    padding-bottom: 8px;
 }
 
 .catalogue__filter-sort-wrapper {
@@ -1187,21 +1214,35 @@ input[type="range"]::-moz-range-thumb {
     gap: 10px;
 }
 
+.catalogue__radio {
+    cursor: pointer;
+}
+
+.catalogue__radio-option {
+    cursor: pointer;
+}
+
 .catalogue__filter-sweets {
     display: flex;
+	align-items: center;
 }
 
 .catalogue__filter-sort-item {
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
+}
+
+.catalogue__filter-berries-item {
+    cursor: pointer;
 }
 
 .catalogue__look-more {
     text-decoration: underline;
     color: #4D0200;
     cursor: pointer;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .catalogue__filter-and-result {
@@ -1275,7 +1316,7 @@ input[type="range"]::-moz-range-thumb {
     max-width: 212px;
 }
 
-.catalogue__filter-sort-wrapper input[type="radio"]:hover {
+.catalogue__radio:hover {
     box-shadow: 0px 1px 2px rgba(77, 2, 0, 0.5);
 }
 
@@ -1283,11 +1324,18 @@ input[type="range"]::-moz-range-thumb {
     border: #C4C4C4 1px solid;
     background-color: #FFFFFF;
     cursor: not-allowed;
+    pointer-events: none;
 }
 
 .catalogue__filter-sort-wrapper input:disabled + label {
     color: #33333380;
     pointer-events: none;
+    cursor: none
+}
+
+.catalogue__filter-sort-item.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 .price-wrapper {
@@ -1299,6 +1347,13 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .new-price {
+    color: #4D0200;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1; 
+}
+
+.red-price {
     color: #E5555D;
     font-size: 18px;
     font-weight: 600;
@@ -1325,3 +1380,11 @@ input[type="range"]::-moz-range-thumb {
     z-index: 1;
 }
 
+.catalogue__filter-berries-hidden {
+    display: block;
+    transition: height 0.3s ease;
+}
+
+.catalogue__filter-berries-hidden.hidden {
+    display: none;
+}

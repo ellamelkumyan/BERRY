@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./style.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/modern-normalize@v1.1.0/modern-normalize.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sanitize.css/2.0.0/sanitize.min.css">
+		<link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+		<link rel="stylesheet" href="./reset.css">
 </head>
 <body>
 	<!-- HEADER -->
@@ -332,7 +334,7 @@
     <div class="feedback__wrapper">
     <div class="feedback__title title">Обратная связь</div>
         <div class="feedback__subtitle">Если у Вас остались вопросы, или Вы не нашли то, что искали, свяжитесь с нами, заполнив форму обратной связи</div>
-        <input class="feedback__input input-name" type="text" placeholder="Ваше имя ">
+        <input class="feedback__input input-name" type="text" placeholder="Ваше имя" pattern="[^0-9]*" title="Имя не должно содержать цифр">
         <input class="feedback__input" disabled type="text" placeholder="Ваш номер">
         <div class="feedback__button-wrapper disabled">
             <button class="feedback-button link red-button" disabled role="button">Отправить</button>
@@ -401,6 +403,7 @@
 </footer>
 
 
-<script src="script.js"></script>
+<script src="main-page_script.js"></script>
+<script src="catalogue_script.js"></script>
 </body>
 </html>

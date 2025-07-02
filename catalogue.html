@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="./style.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/modern-normalize@v1.1.0/modern-normalize.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sanitize.css/2.0.0/sanitize.min.css">
+	<link rel="stylesheet" href="./reset.css">
 </head>
 <body>
 
@@ -111,23 +112,23 @@
 							<div class="catalogue__filter-sort-title filter-title">Сортировать:</div>
 							<div class="catalogue__filter-sort-item">
 								<input type="radio" class="catalogue__radio" id="by-default" name="sorting" value="by-default" checked>
-								<label for="by-default">по умолчанию</label>
+								<label for="by-default" class="catalogue__radio-option">по умолчанию</label>
 							</div>
 							<div class="catalogue__filter-sort-item">
 								<input type="radio" class="catalogue__radio" id="ascending" name="sorting" value="ascending">
-								<label for="ascending">по возрастанию цены</label>
+								<label for="ascending" class="catalogue__radio-option">по возрастанию цены</label>
 							</div>
 							<div class="catalogue__filter-sort-item">
 								<input type="radio" class="catalogue__radio" id="descending" name="sorting" value="descending">
-								<label for="descending">по убыванию цены</label>
+								<label for="descending" class="catalogue__radio-option">по убыванию цены</label>
 							</div>
 							<div class="catalogue__filter-sort-item">
 								<input type="radio" class="catalogue__radio" id="new" name="sorting" value="new">
-								<label for="new">по новинкам</label>
+								<label for="new" class="catalogue__radio-option">по новинкам</label>
 							</div>
-							<div class="catalogue__filter-sort-item">
+							<div class="catalogue__filter-sort-item disabled">
 								<input type="radio" class="catalogue__radio" id="popular" name="sorting" value="popular" disabled>
-								<label for="popular">по популярности</label>
+								<label for="popular" class="catalogue__radio-option">по популярности</label>
 							</div>
 							<!-- <div class="catalogue__filter-horizontal-line"></div> -->
 						</div>
@@ -161,32 +162,40 @@
 							<div class="catalogue__filter-title filter-title">Ягоды:</div>
 							<div class="catalogue__filter-berries-item">
 								<input type="checkbox" class="catalogue__radio" id="cherry" name="berries" value="cherry">
-								<label for="cherry">вишня</label><br>
+								<label for="cherry" class="catalogue__radio-option">вишня</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
 								<input type="checkbox" class="catalogue__radio" id="blackberry" name="berries" value="blackberry">
-								<label for="blackberry">черника</label><br>
+								<label for="blackberry" class="catalogue__radio-option">черника</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
 								<input type="checkbox" class="catalogue__radio" id="victoria" name="berries" value="victoria">
-								<label for="victoria">виктория</label><br>
+								<label for="victoria" class="catalogue__radio-option">виктория</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
 								<input type="checkbox" class="catalogue__radio" id="blueberry" name="berries" value="blueberry">
-								<label for="blueberry">голубика</label><br>
+								<label for="blueberry" class="catalogue__radio-option">голубика</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
 								<input type="checkbox" class="catalogue__radio" id="raspberry" name="sorting" value="raspberry">
-								<label for="raspberry">малина</label><br>
+								<label for="raspberry" class="catalogue__radio-option">малина</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
 								<input type="checkbox" class="catalogue__radio" id="currant" name="berries" value="currant">
-								<label for="currant">смородина</label><br>
+								<label for="currant" class="catalogue__radio-option">смородина</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
 								<input type="checkbox" class="catalogue__radio" id="dewberry" name="berries" value="dewberry">
-								<label for="dewberry">ежевика</label><br>
+								<label for="dewberry" class="catalogue__radio-option">ежевика</label><br>
 							</div>
+
+							<div class="catalogue__filter-berries-hidden hidden">
+								<div class="catalogue__filter-berries-item">
+								<input type="checkbox" class="catalogue__radio" id="watermelon" name="berries" value="watermelon">
+								<label for="watermelon" class="catalogue__radio-option">дыня</label><br>
+							</div>
+							</div>
+							
 							<div class="catalogue__look-more">Посмотреть все</div>
 							<div class="catalogue__filter-horizontal-line"></div>
 						</div>
@@ -214,9 +223,9 @@
 						<div class="catalogue__result-title-and-price">
 							<div class="catalogue__result-title">Микс “Sunrise”</div>
 							 <div class="price-wrapper">
-            <span class="new-price">1 600 ₽</span>
-			<span class="old-price"></span>
-        </div>
+								<span class="new-price">1 600 ₽</span>
+								<span class="old-price"></span>
+							</div>
 						</div>
 						<div class="catalogue__result-button-wrapper">
 							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
@@ -230,9 +239,9 @@
 						<div class="catalogue__result-title-and-price">
                           <div class="catalogue__result-title">Микс “Tofi”</div>
 						  <div class="price-wrapper">
-            <span class="new-price">2 600 ₽</span>
-			<span class="old-price">2 900 ₽</span>
-        </div>
+							<span class="new-price red-price">2 600 ₽</span>
+							<span class="old-price">2 900 ₽</span>
+						</div>
 					    </div>
                         <div class="catalogue__result-button-wrapper">
 							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
@@ -246,9 +255,9 @@
 						<div class="catalogue__result-title-and-price">
                           <div class="catalogue__result-title">Микс “Lovely...”</div>
 						   <div class="price-wrapper">
-            <span class="new-price">1 800 ₽</span>
-			<span class="old-price"></span>
-        </div>
+							<span class="new-price">1 800 ₽</span>
+							<span class="old-price"></span>
+						</div>
 					    </div>
                         <div class="catalogue__result-button-wrapper">
 							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
@@ -262,9 +271,9 @@
 						<div class="catalogue__result-title-and-price">
                           <div class="catalogue__result-title">Микс “Honey”</div>
 						   <div class="price-wrapper">
-            <span class="new-price">1 500 ₽</span>
-			<span class="old-price"></span>
-        </div>
+							<span class="new-price">1 500 ₽</span>
+							<span class="old-price"></span>
+						</div>
 					    </div>
                         <div class="catalogue__result-button-wrapper">
 							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
@@ -278,9 +287,9 @@
 						<div class="catalogue__result-title-and-price">
                           <div class="catalogue__result-title">Микс “Moonlight”</div>
 						   <div class="price-wrapper">
-            <span class="new-price">2 100 ₽</span>
-			<span class="old-price"></span>
-        </div>
+							<span class="new-price">2 100 ₽</span>
+							<span class="old-price"></span>
+						</div>
 					    </div>
                         <div class="catalogue__result-button-wrapper">
 							<a class="catalogue__result-button link red-button" role="button" href="">Добавить в корзину</a>
@@ -369,7 +378,8 @@
 </footer>
 
 
-<script src="script.js"></script>
+<script src="main-page_script.js"></script>
+<script src="catalogue_script.js"></script>
 </body>
 </html>
 </body>
