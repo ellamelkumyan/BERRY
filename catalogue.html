@@ -59,7 +59,7 @@
 		<div class="catalogue__kinds-wrapper">
 
 
-			<div class="catalogue__kinds-item">
+			<div class="catalogue__kinds-item item-box">
 				<div class="catalogue__empty-box-wrapper">
 					<img class="catalogue__empty-box-img" src="assets/empty-box.svg" alt="">
 				</div>
@@ -67,7 +67,7 @@
 			</div>
 
 
-			<div class="catalogue__kinds-item">
+			<div class="catalogue__kinds-item item-heart">
 				<div class="catalogue__kinds-item-wrapper">
 					<img class="catalogue__kinds-item-img" src="assets/box-heart.svg" alt="">
 				</div>
@@ -75,7 +75,7 @@
 			</div>
 
 			
-			<div class="catalogue__kinds-item">
+			<div class="catalogue__kinds-item item-plastic">
 				<div class="catalogue__kinds-item-wrapper">
 					<img class="catalogue__kinds-item-img" src="assets/plastic-box.svg" alt="">
 				</div>
@@ -83,7 +83,7 @@
 			</div>
 
 
-			<div class="catalogue__kinds-item">
+			<div class="catalogue__kinds-item item-basket">
 				<div class="catalogue__kinds-item-wrapper">
 					<img class="catalogue__kinds-item-img" src="assets/basket.svg" alt="">
 				</div>
@@ -91,7 +91,7 @@
 			</div>
 
 
-			<div class="catalogue__kinds-item">
+			<div class="catalogue__kinds-item item-bouquet">
 				<div class="catalogue__kinds-item-wrapper">
 					<img class="catalogue__kinds-item-img" src="./assets/bouquet.svg" alt="">
 				</div>
@@ -126,7 +126,7 @@
 								<input type="radio" class="catalogue__radio" id="new" name="sorting" value="new">
 								<label for="new" class="catalogue__radio-option">по новинкам</label>
 							</div>
-							<div class="catalogue__filter-sort-item disabled">
+							<div class="catalogue__filter-sort-item is-disabled">
 								<input type="radio" class="catalogue__radio" id="popular" name="sorting" value="popular" disabled>
 								<label for="popular" class="catalogue__radio-option">по популярности</label>
 							</div>
@@ -140,16 +140,16 @@
 						<div class="catalogue__filter-title filter-title">Цена:</div>
 						<div class="catalogue__price-filter-wrapper">
 							<div class="catalogue__price-input">
-								<input type="number" class="catalogue__input-min" value="1500" min="0" max="5000" readonly>
-								<input type="number" class="catalogue__input-max" value="3500" min="0" max="5000" readonly>
+								<input type="number" class="catalogue__input-min" value="1500" min="0" max="9000">
+								<input type="number" class="catalogue__input-max" value="5500" min="0" max="9000">
 							</div>
 							<div class="catalogue__slider-container">
 								<div class="catalogue__slider">
 									<div class="progress"></div>
 								</div>
 								<div class="range-input">
-									<input type="range" class="range-min" min="0" max="5000" value="1500" step="100">
-									<input type="range" class="range-max" min="0" max="5000" value="3500" step="100">
+									<input type="range" class="range-min" min="0" max="9000" value="1500" step="100">
+									<input type="range" class="range-max" min="0" max="9000" value="5500" step="100">
 								</div>
 							</div>
 						</div>
@@ -177,7 +177,7 @@
 								<label for="blueberry" class="catalogue__radio-option">голубика</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
-								<input type="checkbox" class="catalogue__radio" id="raspberry" name="sorting" value="raspberry">
+								<input type="checkbox" class="catalogue__radio" id="raspberry" name="berries" value="raspberry">
 								<label for="raspberry" class="catalogue__radio-option">малина</label><br>
 							</div>
 							<div class="catalogue__filter-berries-item">
@@ -214,6 +214,9 @@
 
 				</div>
 			</div>
+
+
+
 			<div class="catalogue__result">
 				<div class="catalogue__result-wrapper">
 
@@ -299,6 +302,7 @@
 
 
 				</div>
+				<div class="catalogue__result-look-more">Посмотреть все</div>
             </div>
         </div>
     </div>
@@ -378,8 +382,8 @@
 </footer>
 
 
-<script src="main-page_script.js"></script>
 <script src="catalogue_script.js"></script>
+
 </body>
 </html>
 </body>

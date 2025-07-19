@@ -1,149 +1,265 @@
 (function() {
-    // константы
-    const el_dots = document.querySelectorAll('.dot');
-    const el_wrapper = document.querySelector('.hit__wrapper');
-    const el_items = document.querySelectorAll('.hit__item');
-    const btn_prevButton = document.querySelector('.hit__button-prev');
-    const btn_nextButton = document.querySelector('.hit__button-next');
-    const btn_buttonUp = document.querySelector('.feedback__button-up');
-    const el_header = document.querySelector('.header');
+    // ====== Константы ======
+    const catalogueWrapper = document.querySelector('.catalogue__wrapper');
+    const heatWrapper = document.querySelector('.heat__wrapper');
+    const dotPagination = document.querySelector('.dot-pagination');
+    const btnPrev = document.querySelector('.heat__button-prev');
+    const btnNext = document.querySelector('.heat__button-next');
+    const btnButtonUp = document.querySelector('.feedback__button-up');
+    const elHeader = document.querySelector('.header');
+    const staticImages = [
+        'assets/sunrise.png',
+        'assets/summer.png',
+        'assets/tasty.png',
+        'assets/sunrise.png',
+        'assets/summer.png',
+        'assets/tasty.png'
+    ];
 
-    // таймеры
-    let isScrolling;
-    let resizeTimer;
+    // Объявляем переменные для хранения функций слайдера
+    let sliderHandlers = {};
 
-	
-    // проверка инпута с именем
-    function initNameValidation() {
-        const nameInput = document.querySelector('.input-name');
-        if (!nameInput) return;
+    // ====== 1. Каталог товаров ======
+    function initCatalog() {
+        if (!catalogueWrapper) return;
 
-        function validateName() {
-            const hasNumbers = /[0-9]/.test(nameInput.value);
-            nameInput.classList.toggle('invalid', hasNumbers);
+        fetch('http://94.198.216.182:5050/api/catalog')
+            .then((response) => {
+                if (!response.ok) throw new Error(`Сетевая ошибка: ${response.status}`);
+                return response.json();
+            })
+            .then((data) => {
+                catalogueWrapper.innerHTML = '';
+                
+                data.forEach((item) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = `catalogue__item catalogue__item_${item.type}`;
+                    itemElement.innerHTML = `
+                        <div class="catalogue__item-content">
+                            <div class="catalogue__item-title">${item.title}</div>
+                            <div class="catalogue__item-button-wrapper">
+                                <button class="catalogue__item-button link transparent-button" role="button">
+                                    Посмотреть
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    catalogueWrapper.appendChild(itemElement);
+                });
+                
+                const finalItem = document.createElement('div');
+                finalItem.className = 'catalogue__item catalogue__item_final';
+                finalItem.innerHTML = `
+                    <div class="catalogue__item-content-final">
+                        <div class="catalogue__item-button-wrapper-final">
+                            <button class="catalogue__item-button-final link white-button" role="button">
+                                <span>Посмотреть<br>все разделы</span>
+                                <img class="catalogue__arrow" src="assets/arrow.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                `;
+                catalogueWrapper.appendChild(finalItem);
+            })
+            .catch((error) => console.error('Не удалось загрузить каталог:', error));
+    }
+
+    // ====== 2. Хиты продаж и слайдер ======
+    function initHeatsSlider() {
+        if (!heatWrapper) {
+            console.error('Элемент .heat__wrapper не найден');
+            return;
         }
 
-        nameInput.addEventListener('input', validateName);
-        validateName(); 
-    }
+        fetch('http://94.198.216.182:5050/api/catalog/hit')
+            .then((response) => {
+                if (!response.ok) throw new Error(`Ошибка HTTP: ${response.status}`);
+                return response.json();
+            })
+            .then((data) => {
+                heatWrapper.innerHTML = '';
+                
+                data.data.forEach((item, index) => {
+                    const heatItem = document.createElement('div');
+                    heatItem.className = 'heat__item';
+                    const formattedPrice = item.priceTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+                    const itemImage = staticImages[index % staticImages.length];
+                    
+                    heatItem.innerHTML = `
+                        <div class="heat__item-img-wrapper">
+                            <img class="heat__item-img" src="${itemImage}" alt="${item.title}">
+                        </div>
+                        <div class="heat__item-title">${item.title}</div>
+                        <div class="heat__item-subtitle">${item.berryList.join(', ')}${item.isSweets ? ' + сладости' : ''}</div>
+                        <div class="heat__item-price">${formattedPrice} ₽</div>
+                        <div class="heat__item-button-wrapper">
+                            <a class="heat__item-button link red-button" role="button" href="#">Добавить в корзину</a>
+                        </div>
+                    `;
+                    heatWrapper.appendChild(heatItem);
+                });
 
-    // функции для слайдера
-    function getVisibleItemsCount() {
-        if (!el_items.length) return 0;
-        return Math.floor(el_wrapper.offsetWidth / el_items[0].offsetWidth) || 1;
-    }
+                initSlider();
+            })
+            .catch((error) => console.error('Не удалось загрузить хиты продаж:', error));
 
-    function updateActiveDot() {
-        if (!el_wrapper || !el_items.length || !el_dots.length) return;
-        
-        const scrollLeft = el_wrapper.scrollLeft;
-        const itemWidth = el_items[0].offsetWidth;
-        const el_itemsPerScreen = getVisibleItemsCount();
-        const currentSlide = Math.round(scrollLeft / itemWidth);
-        const activeDotIndex = Math.floor(currentSlide / el_itemsPerScreen);
-        
-        el_dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === activeDotIndex);
-        });
-		const startIndex = activeDotIndex * el_itemsPerScreen;
-        for (let i = startIndex; i < startIndex + el_itemsPerScreen; i++) {
-            if (el_items[i]) {
-                // задержка для анимации
-                setTimeout(() => {
-                    if (el_items[i]) {
-                        el_items[i].style.opacity = '1';
-                    }
-                }, 50 * (i - startIndex));
+        function getVisibleItemsCount() {
+            const items = document.querySelectorAll('.heat__item');
+            if (!items.length) return 0;
+            const itemWidth = items[0].offsetWidth;
+            return itemWidth ? Math.floor(heatWrapper.offsetWidth / itemWidth) : 1;
+        }
+
+        function updateActiveDot() {
+            const items = document.querySelectorAll('.heat__item');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (!items.length || !dots.length) return;
+            
+            const scrollLeft = heatWrapper.scrollLeft;
+            const itemWidth = items[0].offsetWidth;
+            const visibleItems = getVisibleItemsCount();
+            const currentSlide = Math.round(scrollLeft / itemWidth);
+            const activeDotIndex = Math.floor(currentSlide / visibleItems);
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeDotIndex);
+            });
+        }
+
+        function handleDotClick(e) {
+            const items = document.querySelectorAll('.heat__item');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (!items.length) return;
+            
+            const dotIndex = Array.from(dots).indexOf(e.currentTarget);
+            if (dotIndex === -1) return;
+            
+            const scrollAmount = getVisibleItemsCount() * items[0].offsetWidth;
+            heatWrapper.scrollTo({
+                left: dotIndex * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        function handleButtonClick(step) {
+            const items = document.querySelectorAll('.heat__item');
+            if (!items.length) return;
+            
+            const scrollAmount = getVisibleItemsCount() * items[0].offsetWidth;
+            const newScroll = heatWrapper.scrollLeft + (step * scrollAmount);
+            
+            heatWrapper.scrollTo({
+                left: Math.max(0, Math.min(newScroll, heatWrapper.scrollWidth - heatWrapper.offsetWidth)),
+                behavior: 'smooth'
+            });
+        }
+
+        function handleScroll() {
+            requestAnimationFrame(updateActiveDot);
+        }
+
+        function handleResize() {
+            updateActiveDot();
+        }
+
+        function initSlider() {            
+            const items = document.querySelectorAll('.heat__item');
+            if (!items.length) return;
+            
+            const visibleItems = getVisibleItemsCount();
+            const dotsCount = Math.ceil(items.length / visibleItems);
+            
+            dotPagination.innerHTML = '';
+            for (let i = 0; i < dotsCount; i++) {
+                const dot = document.createElement('span');
+                dot.className = `dot ${i === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', handleDotClick);
+                dotPagination.appendChild(dot);
             }
-        }
-    } 
-
-    function handleDotClick(e) {
-        if (!el_wrapper || !el_items.length) return;
-        
-        const dotIndex = Array.from(el_dots).indexOf(e.currentTarget);
-        if (dotIndex === -1) return;
-        
-        el_wrapper.scrollTo({
-            left: dotIndex * getVisibleItemsCount() * el_items[0].offsetWidth,
-            behavior: 'smooth'
-        });
-    }
-
-    function handleButtonClick(step) {
-        if (!el_wrapper || !el_items.length) return;
-        
-        const scrollAmount = getVisibleItemsCount() * el_items[0].offsetWidth;
-        const newScroll = el_wrapper.scrollLeft + (step * scrollAmount);
-        
-        el_wrapper.scrollTo({
-            left: Math.max(0, Math.min(newScroll, el_wrapper.scrollWidth - el_wrapper.offsetWidth)),
-            behavior: 'smooth'
-        });
-    }
-
-    function handleScroll() {
-        clearTimeout(isScrolling);
-        isScrolling = setTimeout(updateActiveDot, 100);
-    }
-
-    function handleResize() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
+            
+            if (btnPrev) btnPrev.addEventListener('click', () => handleButtonClick(-1));
+            if (btnNext) btnNext.addEventListener('click', () => handleButtonClick(1));
+            
+            heatWrapper.addEventListener('scroll', handleScroll);
+            window.addEventListener('resize', handleResize);
+            
             updateActiveDot();
-        }, 200);
+        }
+
+        // Возвращаем объект с функциями для использования в cleanup
+        sliderHandlers = {
+            handleScroll,
+            handleResize,
+            handleDotClick,
+            handleButtonClick
+        };
     }
 
-    function handleButtonUpClick() {
-        if (el_header) {
-            el_header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // ====== 3. Кнопка "Наверх" ======
+    function initScrollToTop() {
+        if (!btnButtonUp) {
+            console.error('Кнопка "Наверх" не найдена');
+            return;
+        }
+
+        // Показываем/скрываем кнопку при прокрутке
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                btnButtonUp.style.display = 'block';
+            } else {
+                btnButtonUp.style.display = 'none';
+            }
+        });
+
+        // Добавляем обработчик клика
+        btnButtonUp.addEventListener('click', handleButtonUpClick);
+    }
+
+    function handleButtonUpClick(e) {
+        e.preventDefault();
+        console.log('Кнопка нажата - прокрутка вверх');
+        
+        if (elHeader) {
+            elHeader.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
     }
 
-    function setupEventListeners() {
-        if (el_wrapper) el_wrapper.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleResize);
-        
-        if (btn_prevButton) btn_prevButton.addEventListener('click', () => handleButtonClick(-1));
-        if (btn_nextButton) btn_nextButton.addEventListener('click', () => handleButtonClick(1));
-        
-        el_dots.forEach(dot => {
-            if (dot) dot.addEventListener('click', handleDotClick);
-        });
-        
-        if (btn_buttonUp) btn_buttonUp.addEventListener('click', handleButtonUpClick);
-    }
-
-    // очистка
     function cleanupEventListeners() {
-        if (el_wrapper) el_wrapper.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('resize', handleResize);
+        if (heatWrapper) heatWrapper.removeEventListener('scroll', sliderHandlers.handleScroll);
+        window.removeEventListener('resize', sliderHandlers.handleResize);
         
-        if (btn_prevButton) btn_prevButton.removeEventListener('click', handleButtonClick); 
-        if (btn_nextButton) btn_nextButton.removeEventListener('click', handleButtonClick); 
+        if (btnPrev) btnPrev.removeEventListener('click', () => sliderHandlers.handleButtonClick(-1)); 
+        if (btnNext) btnNext.removeEventListener('click', () => sliderHandlers.handleButtonClick(1)); 
         
-        el_dots.forEach(dot => {
-            if (dot) dot.removeEventListener('click', handleDotClick);
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach(dot => {
+            if (dot) dot.removeEventListener('click', sliderHandlers.handleDotClick);
         });
         
-        if (btn_buttonUp) btn_buttonUp.removeEventListener('click', handleButtonUpClick);
+        if (btnButtonUp) btnButtonUp.removeEventListener('click', handleButtonUpClick);
     }
 
-    function init() {
-        if (el_wrapper) {
-            setupEventListeners();
-            updateActiveDot();
-        }
-        
-        initNameValidation();
+    // ====== Инициализация всех компонентов ======
+    function initAll() {
+        initCatalog();
+        initHeatsSlider();
+        initScrollToTop();
     }
 
-    // запуск инициализации
+    // Запуск при полной загрузке DOM
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        setTimeout(init, 0);
+        setTimeout(initAll, 0);
     } else {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', initAll);
     }
-
-    window.sliderCleanup = cleanupEventListeners;
 })();
